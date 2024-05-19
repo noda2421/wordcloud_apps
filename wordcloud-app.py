@@ -9,19 +9,18 @@ def nouns_maker(text):
     noun_list = []
 
     for token in tokens:
-        if token.part_of_speech.split(",")[0] == "名詞":
-            if not token.part_of_speech.split(",")[0] == omit_list:
-                noun_list.append(token.surface)
+        if token.part_of_speech.split(",")[0] == "名詞" and \
+                token.surface not in rm_list:
+                    noun_list.append(token.surface)
 
     return " ".join(noun_list)
-
 
 st.sidebar.text("config")
 width = st.sidebar.slider("width", 0, 1200, 800, 10)
 height = st.sidebar.slider("height", 0, 1200, 500, 10)
-st.sidebar.selectbox("テーマ", ["gist_heat", "PuBuGn"])
-omit_words = st.sidebar.text_input("除外したいワードをスペース区切りで入れてください")
-omit_list = omit_words.split(" ")
+st.sidebar.selectbox("ワードクラウドテーマ", ["gist_heat", "PuBuGn","Greys","Accent_r"])
+rm_words = st.sidebar.text_input("除外したいワードをスペース区切りで入れてください")
+rm_list = rm_words.split(" ")
 st.title("Wordcloud Maker")
 text = st.text_area("入力らん", placeholder="ワードクラウドにしたい文章を入れてください")
 
